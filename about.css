@@ -1,0 +1,450 @@
+/* =======================================================
+   ABOUT PAGE — ENHANCED VERSION
+======================================================= */
+
+/* --- Base Variables --- */
+body {
+    --bg: #f9f9f9;
+    --bg-alt: #ffffff;
+    --text: #111;
+    --accent: #00b894;
+    --glass: rgba(255, 255, 255, 0.15);
+    --shadow: rgba(0, 0, 0, 0.2);
+    font-family: "Poppins", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    overflow-x: hidden;
+  }
+  
+  body.dark {
+    --bg: #072A24;
+    --bg-alt: #0f3a32;
+    --text: #e2e8e6;
+    --accent: #00ffa2;
+    --glass: rgba(255, 255, 255, 0.08);
+    --shadow: rgba(0, 0, 0, 0.6);
+    background: var(--bg);
+    color: var(--text);
+  }
+  .about-hero {
+  position: relative;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text, #fff);
+  overflow: hidden;
+  background: var(--bg, #0a1f1c);
+}
+
+.about-hero .hero-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(rgba(7, 42, 36, 0.8), rgba(7, 42, 36, 0.8)),
+    url("./images/about-abstract.jpg") center/cover no-repeat;
+  z-index: 0;
+  filter: brightness(0.8);
+}
+
+.about-hero .hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  padding: 0 1.5rem;
+}
+
+.about-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.about-hero p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* =========================
+   PRELOADER (4-quadrant split-from-center)
+   Replace previous preloader styles with these
+   ========================= */
+
+   #preloader.preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  
+    /* Glass effect background */
+    background: rgba(0, 0, 0, 0.2); /* semi-transparent dark overlay */
+    backdrop-filter: blur(12px) saturate(150%) brightness(1.1);
+    -webkit-backdrop-filter: blur(12px) saturate(150%) brightness(1.1);
+  
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  
+  /* Final hiding */
+  #preloader.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  
+  
+  /* grid that represents the 4 quadrants */
+  .preloader-grid{
+    position: absolute;
+    inset: 0;
+    width:100vw;
+    height:100vh;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    z-index: 2;
+  }
+  
+  /* each panel holds one video and clips it */
+  .panel{
+    position: relative;
+    overflow: hidden;
+    /* glass look for the panels while they're visible */
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px) saturate(120%);
+    /* initial transform (centered) will be defined per quadrant below */
+    transform: var(--panel-start, translate(0,0));
+    transition: transform 900ms cubic-bezier(.2,.9,.25,1), opacity 600ms ease;
+  }
+  
+  /* panel positions in the 2x2 grid */
+  .p1{ grid-area: 1 / 1 / 2 / 2; --panel-start: translate(50%,50%); }  /* top-left -> start at center */
+  .p2{ grid-area: 1 / 2 / 2 / 3; --panel-start: translate(-50%,50%); } /* top-right -> start center */
+  .p3{ grid-area: 2 / 1 / 3 / 2; --panel-start: translate(50%,-50%); } /* bottom-left -> start center */
+  .p4{ grid-area: 2 / 2 / 3 / 3; --panel-start: translate(-50%,-50%); }/* bottom-right -> start center */
+  
+  /* video inside each panel:
+     - width/height = 200% so each panel can display the appropriate quadrant.
+     - then we translate the video inside the panel so that the panel sees the top-left/top-right/etc quarter
+  */
+  .panel .pvid,
+  .panel video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    object-fit: cover;
+    /* variables below control which quarter is shown inside each panel */
+    transform: translate(var(--vx,0%), var(--vy,0%));
+    will-change: transform;
+  }
+  
+  /* set which quarter is shown */
+  .p1 video{ --vx: 0%;    --vy: 0%;    }  /* top-left quarter */
+  .p2 video{ --vx: -50%;  --vy: 0%;    }  /* top-right quarter */
+  .p3 video{ --vx: 0%;    --vy: -50%;  }  /* bottom-left quarter */
+  .p4 video{ --vx: -50%;  --vy: -50%;  }  /* bottom-right quarter */
+  
+  /* When we add ".open" to the preloader, panels animate back to their grid positions
+     (no transform), visually sliding out from the center to the edges.
+  */
+  #preloader.open .panel{
+    transform: translate(0,0);
+  }
+
+  /* NEW: when we add ".slide-out", panels move to corners */
+  #preloader.slide-out .p1 { transform: translate(-100%, -100%); }
+  #preloader.slide-out .p2 { transform: translate(100%, -100%); }
+  #preloader.slide-out .p3 { transform: translate(-100%, 100%); }
+  #preloader.slide-out .p4 { transform: translate(100%, 100%); }
+  
+  /* fade-out and hide after full animation */
+  #preloader.hide{
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 450ms linear 300ms;
+  }
+  
+  /* Respect reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .panel { transition: none; transform: translate(0,0) !important; }
+    #preloader { display:none; } /* skip preloader entirely for reduced motion */
+  }
+  
+ 
+  /* =========================
+     NAVBAR
+     ========================= */
+  #mainHeader{
+    position:sticky;
+    top:16px;
+    margin: 20px auto;
+    width: min(1200px, 96%);
+    z-index: 1000;
+    transition: transform 300ms ease, background 300ms ease, color 300ms ease;
+    padding:10px;
+    backdrop-filter: blur(6px) saturate(120%);
+  }
+  
+  /* internal layout */
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    gap: 24px;
+    justify-content:space-between;
+  }
+  
+  .logo{
+    font-weight:700;
+    letter-spacing:0.4px;
+    font-size:1.125rem;
+    color:var(--text);
+  }
+  
+  /* nav links */
+  .nav-links{
+    display:flex;
+    gap:18px;
+    list-style:none;
+    margin:0;
+    padding:0;
+    align-items:center;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color:var(--text);
+    font-weight:600;
+    letter-spacing:0.6px;
+    font-size:.9rem;
+    transition: color 200ms ease, opacity 220ms ease;
+  }
+  
+  /* actions */
+  .nav-actions{display:flex; align-items:center; gap:10px}
+  .btn-ghost{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.04);
+    padding:8px 10px;
+    border-radius:10px;
+    color:var(--text);
+    cursor:pointer;
+  }
+  
+  /* mobile adjustments */
+  .mobile-only{display:none}
+  @media (max-width:900px){
+    .nav-links{display:none}
+    .mobile-only{display:inline-flex}
+    #mainHeader{padding:8px}
+  }
+  
+  /* hidden (scroll down) style — translucent and letters fade */
+  #mainHeader.nav-hidden{
+    transform: translateY(-6px);
+    background: linear-gradient(180deg, rgba(0,0,0,0.03), transparent);
+    border: none;
+    color: transparent;
+    opacity: .9;
+  }
+  #mainHeader.nav-hidden .nav-links a{ opacity:0; pointer-events:none; }
+  #mainHeader.nav-hidden .logo{ opacity:0; }
+  
+  /* reveal (scroll up) */
+  #mainHeader.nav-visible{ transform:none; opacity:1; }
+ 
+  
+  /* --- Hero --- */
+  .about-hero {
+    background: linear-gradient(135deg, var(--bg-alt), var(--bg));
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-hero h1 {
+    font-size: 3.2rem;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+  .about-hero p {
+    max-width: 620px;
+    margin: 1.5rem auto;
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+  
+  /* floating particles (subtle motion) */
+  .about-hero::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 120%;
+    top: -10%;
+    left: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.05) 0%, transparent 70%),
+                radial-gradient(circle at 70% 70%, rgba(255,255,255,0.07) 0%, transparent 70%);
+    animation: floatGlow 12s ease-in-out infinite alternate;
+  }
+  @keyframes floatGlow {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-20px); }
+  }
+  
+  /* --- Timeline Section --- */
+  .timeline {
+    position: relative;
+    padding: 100px 20px;
+    background: var(--bg);
+  }
+  .timeline h2 {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 2.2rem;
+    color: var(--accent);
+  }
+  .timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    transform: translateX(-50%);
+  }
+  .timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 30px 40px;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  .timeline-item.left { left: 0; text-align: right; }
+  .timeline-item.right { left: 50%; text-align: left; }
+  
+  /* --- iOS Glass Card Feel --- */
+  .timeline-item .content {
+    background: var(--glass);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 20px;
+    padding: 25px 30px;
+    box-shadow: 0 8px 25px var(--shadow);
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .timeline-item .content:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  }
+  
+  /* Dots on the timeline */
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    top: 35px;
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--accent);
+  }
+  .timeline-item.left::before { right: -10px; }
+  .timeline-item.right::before { left: -10px; }
+  
+  /* --- Team Section --- */
+  .team-section {
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+  .team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  .team-card {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px var(--shadow);
+    padding: 1.5rem;
+    width: 250px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .team-card:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  }
+  .team-card img {
+    width: 100%;
+    border-radius: 1rem;
+    filter: brightness(0.9);
+  }
+  .team-card h3 {
+    margin-top: 0.8rem;
+    color: var(--accent);
+  }
+  
+  /* --- Mission --- */
+  .mission-section {
+    background: var(--bg-alt);
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+  .mission-stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .stat-box {
+    background: var(--glass);
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 3px 8px var(--shadow);
+    backdrop-filter: blur(15px);
+    transition: transform 0.4s ease;
+  }
+  .stat-box:hover {
+    transform: scale(1.05);
+  }
+  .stat-box .number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  
+  /* --- Footer --- */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text);
+  }
+  footer a {
+    color: var(--accent);
+  }
+  
+  /* --- Responsive --- */
+  @media (max-width: 768px) {
+    .timeline-line { left: 4px; }
+    .timeline-item {
+      width: 100%;
+      text-align: left;
+      padding-left: 40px;
+    }
+    .timeline-item.left,
+    .timeline-item.right {
+      left: 0;
+    }
+    .timeline-item::before {
+      left: 0;
+    }
+  }
+  

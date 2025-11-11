@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — SWIFT</title>
+  <link rel="stylesheet" href="about.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+
+  <!-- ===========================
+     PRELOADER (4-quadrant split-from-center)
+     Put your preloader video at ecommerce/images/intro.mp4 (or change the src)
+     =========================== -->
+<div id="preloader" class="preloader" aria-hidden="true">
+    <div class="preloader-grid">
+      <!-- four panels, each with a video element that shows one quadrant
+           NOTE: each <video> uses the same source. JS will sync their time.
+      -->
+      <div class="panel p1">
+        <video class="pvid" autoplay muted playsinline preload="auto" loop>
+          <source src="/images/164462_Shadows moving across an office desk timelapse_By_Omri_Ohana_Artlist_HD.mp4" type="video/mp4" />
+        </video>
+      </div>
+  
+      <div class="panel p2">
+        <video class="pvid" autoplay muted playsinline preload="auto" loop>
+          <source src="/images/164462_Shadows moving across an office desk timelapse_By_Omri_Ohana_Artlist_HD.mp4" type="video/mp4" />
+        </video>
+      </div>
+  
+      <div class="panel p3">
+        <video class="pvid" autoplay muted playsinline preload="auto" loop>
+          <source src="/images/164462_Shadows moving across an office desk timelapse_By_Omri_Ohana_Artlist_HD.mp4" type="video/mp4" />
+        </video>
+      </div>
+  
+      <div class="panel p4">
+        <video class="pvid" autoplay muted playsinline preload="auto" loop>
+          <source src="/images/164462_Shadows moving across an office desk timelapse_By_Omri_Ohana_Artlist_HD.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- ===========================
+       NAVBAR (sticky) with items and theme toggle
+       =========================== -->
+  <header id="mainHeader" class="liquid-glass">
+    <nav class="nav-inner">
+      <div class="logo" aria-label="Brand">SWIFT</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" data-target="home">HOME</a></li>
+        <li><a href="about.html" data-target="about">ABOUT</a></li>
+        <li><a href="mission.html" data-target="services">MISSION</a></li>
+        <li><a href="products.html" data-target="products">PRODUCTS/SERVICES</a></li>
+        <li><a href="contact.html" data-target="contact">CONTACT US</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="themeToggle" class="btn-ghost" aria-pressed="false" title="Toggle dark/light">
+          🌙
+        </button>
+        <!-- small hamburger for mobile -->
+        <button id="mobileToggle" class="btn-ghost mobile-only" aria-expanded="false">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- =========================== ABOUT CONTENT =========================== -->
+  <main>
+    <!-- Hero Section -->
+    <section class="about-hero">
+      <div class="hero-content">
+        <h1 class="reveal">Our Story</h1>
+        <p class="reveal">From humble beginnings to redefining digital commerce — SWIFT was born from a desire to make online shopping intuitive, beautiful, and human.</p>
+      </div>
+    </section>
+
+  <!-- ================= TIMELINE SECTION ================= -->
+  <section class="timeline">
+    <h2>Our Journey</h2>
+    <div class="timeline-line"></div>
+    <div class="timeline-item left">
+      <div class="content">
+        <h3>2010</h3>
+        <p>Founded with the goal to redefine connectivity and commerce.</p>
+      </div>
+    </div>
+    <div class="timeline-item right">
+      <div class="content">
+        <h3>2015</h3>
+        <p>Launched our first digital marketplace — empowering small businesses.</p>
+      </div>
+    </div>
+    <div class="timeline-item left">
+      <div class="content">
+        <h3>2020</h3>
+        <p>Integrated smart logistics and AI to enhance user experiences.</p>
+      </div>
+    </div>
+    <div class="timeline-item right">
+      <div class="content">
+        <h3>2025</h3>
+        <p>Expanding globally — connecting communities through technology.</p>
+      </div>
+    </div>
+  </section>
+
+
+    <!-- Team Section -->
+    <section id="team" class="team-section">
+      <h2 class="section-title reveal">Meet the Team</h2>
+      <div class="team-grid">
+        <div class="team-card reveal">
+          <img src="https://picsum.photos/seed/a1/400" alt="CEO">
+          <h3>Alex Morgan</h3>
+          <p>CEO & Founder</p>
+        </div>
+        <div class="team-card reveal">
+          <img src="https://picsum.photos/seed/a2/400" alt="CTO">
+          <h3>Riley Chen</h3>
+          <p>CTO</p>
+        </div>
+        <div class="team-card reveal">
+          <img src="https://picsum.photos/seed/a3/400" alt="Designer">
+          <h3>Jamie Patel</h3>
+          <p>Lead Designer</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission -->
+    <section id="mission" class="mission-section">
+      <h2 class="section-title reveal">Our Mission</h2>
+      <p class="reveal">To empower businesses and delight customers through innovation, design, and trust.</p>
+      <div class="mission-stats">
+        <div class="stat-box reveal"><span class="number">500+</span><p>Brands Partnered</p></div>
+        <div class="stat-box reveal"><span class="number">50K+</span><p>Happy Customers</p></div>
+        <div class="stat-box reveal"><span class="number">99%</span><p>Uptime Guarantee</p></div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer liquid-glass">
+      <div class="container">
+        <p>Ready to connect? <a href="contact.html" class="btn-outline">Contact Us</a></p>
+        <small>© <span id="year"></span> SWIFT — Built for the modern shopper.</small>
+      </div>
+    </footer>
+  </main>
+
+  <script src="about.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</body>
+</html>

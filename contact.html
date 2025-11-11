@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | Telkom E-Commerce</title>
+  <link rel="stylesheet" href="contact.css" />
+  <link rel="stylesheet" href="global.css" /> <!-- existing global -->
+  <script src="https://kit.fontawesome.com/a2e0e9c6c5.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!-- ===========================
+     PRELOADER (4-quadrant split-from-center)
+     Put your preloader video at ecommerce/images/intro.mp4 (or change the src)
+     =========================== -->
+     <div id="preloader" class="preloader" aria-hidden="true">
+        <div class="preloader-grid">
+          <!-- four panels, each with a video element that shows one quadrant
+               NOTE: each <video> uses the same source. JS will sync their time.
+          -->
+          <div class="panel p1">
+            <video class="pvid" autoplay muted playsinline preload="auto" loop>
+              <source src="/images/164462_Shadows moving across an office desk timelapse_By_Omri_Ohana_Artlist_HD.mp4" type="video/mp4" />
+            </video>
+          </div>
+      
+          <div class="panel p2">
+            <video class="pvid" autoplay muted playsinline preload="auto" loop>
+              <source src="/images/164462_Shadows moving across an office desk timelapse_By_Omri_Ohana_Artlist_HD.mp4" type="video/mp4" />
+            </video>
+          </div>
+      
+          <div class="panel p3">
+            <video class="pvid" autoplay muted playsinline preload="auto" loop>
+              <source src="/images/164462_Shadows moving across an office desk timelapse_By_Omri_Ohana_Artlist_HD.mp4" type="video/mp4" />
+            </video>
+          </div>
+      
+          <div class="panel p4">
+            <video class="pvid" autoplay muted playsinline preload="auto" loop>
+              <source src="/images/164462_Shadows moving across an office desk timelapse_By_Omri_Ohana_Artlist_HD.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </div>
+      
+    
+      <!-- ===========================
+           NAVBAR (sticky) with items and theme toggle
+           =========================== -->
+      <header id="mainHeader" class="liquid-glass">
+        <nav class="nav-inner">
+          <div class="logo" aria-label="Brand">SWIFT</div>
+          <ul class="nav-links" id="navLinks">
+            <li><a href="index.html" data-target="home">HOME</a></li>
+            <li><a href="about.html" data-target="about">ABOUT</a></li>
+            <li><a href="mission.html" data-target="services">MISSION</a></li>
+            <li><a href="products.html" data-target="products">PRODUCTS/SERVICES</a></li>
+            <li><a href="#contact.html" data-target="contact">CONTACT US</a></li>
+          </ul>
+    
+          <div class="nav-actions">
+            <button id="themeToggle" class="btn-ghost" aria-pressed="false" title="Toggle dark/light">
+              🌙
+            </button>
+            <!-- small hamburger for mobile -->
+            <button id="mobileToggle" class="btn-ghost mobile-only" aria-expanded="false">☰</button>
+          </div>
+        </nav>
+      </header>
+    
+    
+  <!-- ✉️ Contact Section -->
+  <section class="contact_us">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 offset-md-1">
+          <div class="contact_inner">
+            <div class="row">
+              <div class="col-md-10">
+                <div class="contact_form_inner">
+                  <div class="contact_field">
+                    <h3>Contact Us</h3>
+                    <p>We’re always happy to hear from you. Send us a message and we’ll respond as soon as possible!</p>
+                    <input type="text" class="form-control form-group" placeholder="Name" />
+                    <input type="text" class="form-control form-group" placeholder="Email" />
+                    <textarea class="form-control form-group" placeholder="Message"></textarea>
+                    <button class="contact_form_submit">Send Message</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="right_conatct_social_icon d-flex align-items-end">
+                  <div class="socil_item_inner d-flex">
+                    <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact_info_sec">
+              <h4>Contact Info</h4>
+              <div class="d-flex info_single align-items-center">
+                <i class="fas fa-headset"></i>
+                <span>+254 700 000 000</span>
+              </div>
+              <div class="d-flex info_single align-items-center">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>support@telkomshop.co.ke</span>
+              </div>
+              <div class="d-flex info_single align-items-center">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Telkom Plaza, Nairobi, Kenya</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🗺️ Map Section -->
+  <section class="map_sec">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 offset-md-1">
+          <div class="map_inner">
+            <h4>Find Us on Google Maps</h4>
+            <p>Visit our main offices or locate the nearest service outlet to you.</p>
+            <div class="map_bind">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63909.5915789475!2d36.7896076!3d-1.2920659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10e68b1f6b2d%3A0x7a4dbec53f4b9021!2sTelkom%20Kenya%20Head%20Office!5e0!3m2!1sen!2ske!4v1698412345789!5m2!1sen!2ske" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🦶 Footer -->
+  <footer class="footer">
+    <p>© <span id="year"></span> TelkomShop. All Rights Reserved.</p>
+  </footer>
+
+  <script src="contact.js"></script>
+</body>
+</html>

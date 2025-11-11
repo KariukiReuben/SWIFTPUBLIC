@@ -1,0 +1,416 @@
+:root {
+    --bg: #072A24;
+    --bg-alt: #0f3a32;
+    --accent: #00bfa6;
+    --text: #e2e8e6;
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    --ease: 300ms cubic-bezier(.2,.9,.25,1);
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background var(--ease), color var(--ease);
+    overflow-x: hidden;
+  }
+  
+    
+/* =========================
+   PRELOADER (4-quadrant split-from-center)
+   Replace previous preloader styles with these
+   ========================= */
+
+   #preloader.preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  
+    /* Glass effect background */
+    background: rgba(0, 0, 0, 0.2); /* semi-transparent dark overlay */
+    backdrop-filter: blur(12px) saturate(150%) brightness(1.1);
+    -webkit-backdrop-filter: blur(12px) saturate(150%) brightness(1.1);
+  
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  
+  /* Final hiding */
+  #preloader.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  
+  
+  /* grid that represents the 4 quadrants */
+  .preloader-grid{
+    position: absolute;
+    inset: 0;
+    width:100vw;
+    height:100vh;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    z-index: 2;
+  }
+  
+  /* each panel holds one video and clips it */
+  .panel{
+    position: relative;
+    overflow: hidden;
+    /* glass look for the panels while they're visible */
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px) saturate(120%);
+    /* initial transform (centered) will be defined per quadrant below */
+    transform: var(--panel-start, translate(0,0));
+    transition: transform 900ms cubic-bezier(.2,.9,.25,1), opacity 600ms ease;
+  }
+  
+  /* panel positions in the 2x2 grid */
+  .p1{ grid-area: 1 / 1 / 2 / 2; --panel-start: translate(50%,50%); }  /* top-left -> start at center */
+  .p2{ grid-area: 1 / 2 / 2 / 3; --panel-start: translate(-50%,50%); } /* top-right -> start center */
+  .p3{ grid-area: 2 / 1 / 3 / 2; --panel-start: translate(50%,-50%); } /* bottom-left -> start center */
+  .p4{ grid-area: 2 / 2 / 3 / 3; --panel-start: translate(-50%,-50%); }/* bottom-right -> start center */
+  
+  /* video inside each panel:
+     - width/height = 200% so each panel can display the appropriate quadrant.
+     - then we translate the video inside the panel so that the panel sees the top-left/top-right/etc quarter
+  */
+  .panel .pvid,
+  .panel video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    object-fit: cover;
+    /* variables below control which quarter is shown inside each panel */
+    transform: translate(var(--vx,0%), var(--vy,0%));
+    will-change: transform;
+  }
+  
+  /* set which quarter is shown */
+  .p1 video{ --vx: 0%;    --vy: 0%;    }  /* top-left quarter */
+  .p2 video{ --vx: -50%;  --vy: 0%;    }  /* top-right quarter */
+  .p3 video{ --vx: 0%;    --vy: -50%;  }  /* bottom-left quarter */
+  .p4 video{ --vx: -50%;  --vy: -50%;  }  /* bottom-right quarter */
+  
+  /* When we add ".open" to the preloader, panels animate back to their grid positions
+     (no transform), visually sliding out from the center to the edges.
+  */
+  #preloader.open .panel{
+    transform: translate(0,0);
+  }
+
+  /* NEW: when we add ".slide-out", panels move to corners */
+  #preloader.slide-out .p1 { transform: translate(-100%, -100%); }
+  #preloader.slide-out .p2 { transform: translate(100%, -100%); }
+  #preloader.slide-out .p3 { transform: translate(-100%, 100%); }
+  #preloader.slide-out .p4 { transform: translate(100%, 100%); }
+  
+  /* fade-out and hide after full animation */
+  #preloader.hide{
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 450ms linear 300ms;
+  }
+  
+  /* Respect reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .panel { transition: none; transform: translate(0,0) !important; }
+    #preloader { display:none; } /* skip preloader entirely for reduced motion */
+  }
+  
+ 
+  /* =========================
+     NAVBAR
+     ========================= */
+  #mainHeader{
+    position:sticky;
+    top:16px;
+    margin: 20px auto;
+    width: min(1200px, 96%);
+    z-index: 1000;
+    transition: transform 300ms ease, background 300ms ease, color 300ms ease;
+    padding:10px;
+    backdrop-filter: blur(6px) saturate(120%);
+  }
+  
+  /* internal layout */
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    gap: 24px;
+    justify-content:space-between;
+  }
+  
+  .logo{
+    font-weight:700;
+    letter-spacing:0.4px;
+    font-size:1.125rem;
+    color:var(--text);
+  }
+  
+  /* nav links */
+  .nav-links{
+    display:flex;
+    gap:18px;
+    list-style:none;
+    margin:0;
+    padding:0;
+    align-items:center;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color:var(--text);
+    font-weight:600;
+    letter-spacing:0.6px;
+    font-size:.9rem;
+    transition: color 200ms ease, opacity 220ms ease;
+  }
+  
+  /* actions */
+  .nav-actions{display:flex; align-items:center; gap:10px}
+  .btn-ghost{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.04);
+    padding:8px 10px;
+    border-radius:10px;
+    color:var(--text);
+    cursor:pointer;
+  }
+  
+  /* mobile adjustments */
+  .mobile-only{display:none}
+  @media (max-width:900px){
+    .nav-links{display:none}
+    .mobile-only{display:inline-flex}
+    #mainHeader{padding:8px}
+  }
+  
+  /* hidden (scroll down) style — translucent and letters fade */
+  #mainHeader.nav-hidden{
+    transform: translateY(-6px);
+    background: linear-gradient(180deg, rgba(0,0,0,0.03), transparent);
+    border: none;
+    color: transparent;
+    opacity: .9;
+  }
+  #mainHeader.nav-hidden .nav-links a{ opacity:0; pointer-events:none; }
+  #mainHeader.nav-hidden .logo{ opacity:0; }
+  
+  /* reveal (scroll up) */
+  #mainHeader.nav-visible{ transform:none; opacity:1; }
+ 
+
+  /* --- Contact Section --- */
+.contact_us{
+    padding: 90px 0; /* slightly tighter so map is visible earlier */
+    background: var(--bg-alt);
+    position: relative;
+  }
+  
+  .contact_inner {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow);
+    border-radius: 20px;
+    padding: 40px; /* reduced padding to expose map cue earlier */
+    position: relative;
+    overflow: visible; /* allow cue to overflow slightly */
+    animation: fadeInUp 1s ease-in-out;
+  }
+  
+  /* keep headings and form visuals consistent */
+  .contact_field h3 {
+    font-size: 34px;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .contact_field p { color: var(--text); opacity: .9; }
+  
+  /* inputs */
+  .contact_field .form-control {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255,255,255,0.06);
+    color: var(--text);
+    padding: 10px 0;
+    margin-bottom: 20px;
+    transition: border-color 200ms;
+  }
+  .contact_field .form-control:focus { border-color: var(--accent); outline: none; }
+  
+  /* submit */
+  .contact_form_submit {
+    background: linear-gradient(90deg, var(--accent), #00f2b6);
+    color: var(--bg);
+    border: none;
+    padding: 12px 20px;
+    width: 100%;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 180ms ease, filter 180ms ease;
+  }
+  .contact_form_submit:hover { transform: translateY(-3px); filter:brightness(1.05); }
+  
+  /* contact info card */
+  .contact_info_sec {
+    background: var(--accent);
+    color: var(--bg);
+    position: absolute;
+    top: 8%;
+    right: 0;
+    width: 280px;
+    padding: 32px;
+    border-radius: 20px 0 0 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  }
+  
+  /* socials */
+  .right_conatct_social_icon { display:flex; justify-content:center; align-items:flex-end; height:100%; }
+  .socil_item_inner li { list-style:none; }
+  .socil_item_inner li a { color: var(--text); margin: 0 8px; font-size:20px; transition: color 180ms; }
+  .socil_item_inner li a:hover { color: #fff; transform: translateY(-3px); }
+  
+  /* --- Map Section (reduced visual weight, now half-ish) --- */
+  .map_sec {
+    padding: 60px 0;
+    background: var(--bg);
+  }
+  
+  /* layout inside map_inner: on wide screens two columns (map + description),
+     on mobile they stack — JS will inject .map-desc element */
+  .map_inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  /* two-column layout on large screens */
+  @media (min-width: 900px) {
+    .map_inner {
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+  }
+  
+  /* map container limited height so it doesn't dominate */
+  .map_bind {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    height: 50vh;               /* <- half viewport height for a balanced look */
+    min-height: 320px;
+  }
+  
+  /* ensure iframe fills container nicely */
+  .map_bind iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  
+  /* injected description block style (created by JS) */
+  .map-desc {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 22px;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+  
+  /* short header in map-desc */
+  .map-desc h5 {
+    margin: 0;
+    color: var(--accent);
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+  
+  /* subtle pointer overlay/cue to indicate the map below */
+  .map-cue {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -18px; /* sits slightly below the contact card */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    cursor: pointer;
+    z-index: 20;
+    transition: transform 200ms ease, opacity 200ms ease;
+  }
+  
+  /* arrow inside the cue */
+  .map-cue .arrow {
+    display:block;
+    width: 0; height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 12px solid var(--text);
+    opacity: 0.95;
+    transform-origin: center;
+    animation: cue-bounce 1.4s infinite;
+  }
+  
+  /* subtle bounce to draw attention */
+  @keyframes cue-bounce {
+    0% { transform: translateY(0); opacity: 0.95; }
+    50% { transform: translateY(6px); opacity: 0.9; }
+    100% { transform: translateY(0); opacity: 0.95; }
+  }
+  
+  /* more hint text for accessibility (hidden visually but available to screen readers) */
+  .map-cue .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
+  }
+  
+  /* reduce contact padding on narrow screens */
+  @media (max-width: 992px) {
+    .contact_inner { padding: 28px; }
+    .contact_info_sec { position: static; width: 100%; border-radius: 12px; margin-top: 18px; }
+    .map_bind { height: 360px; }
+  }
+  
+  /* small devices: stack layout and push cue inside flow */
+  @media (max-width: 640px) {
+    .map_cue { bottom: -12px; width:46px; height:46px; }
+    .map_bind { height: 320px; }
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(60px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
